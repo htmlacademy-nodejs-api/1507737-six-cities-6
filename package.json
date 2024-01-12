@@ -9,6 +9,7 @@
   ],
   "main": "main.js",
   "scripts": {
+    "dev": "tsup ./src/main.ts --watch",
     "start": "npm run build && node ./dist/main.js",
     "build": "npm run clean && npm run compile",
     "lint": "eslint src/ --ext .ts",
@@ -24,6 +25,7 @@
     "eslint-config-htmlacademy": "9.1.1",
     "rimraf": "5.0.1",
     "ts-node": "10.9.1",
+    "tsup": "^8.0.1",
     "typescript": "5.2.2"
   },
   "type": "module",
