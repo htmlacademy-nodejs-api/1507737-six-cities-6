@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Viktor](https://up.htmlacademy.ru/nodejs-api/6/user/1507737).
-* Наставник: `Неизвестно`.
+* Наставник: [Константин Ильин](https://htmlacademy.ru/profile/id2374827).
 
 ---
 
