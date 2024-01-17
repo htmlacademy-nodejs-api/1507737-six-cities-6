@@ -1,3 +1,5 @@
+import c from 'chalk';
+
 import { Command } from './command.js';
 
 export class HelpCommand implements Command {
@@ -11,9 +13,9 @@ export class HelpCommand implements Command {
     Пример:
         cli.js --<command> [--arguments]
     Команды:
-        --version:                   # выводит номер версии
-        --help:                      # печатает этот текст
-        --import <path>:             # импортирует данные из TSV
+        ${c.blueBright('--version:')}                   # Вывести номер текущей версии приложения
+        ${c.blueBright('--help:')}                      # Показать справку по использованию программы
+        ${c.blueBright('--import <path>:')}             # Импортировать данные из файла формата TSV
 `);
   }
 }
