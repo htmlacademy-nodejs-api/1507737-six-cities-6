@@ -1,4 +1,5 @@
-import { TSVFileReader } from '../../lib/file-reader/index.js';
+import { TSVFileReader } from '~/lib/file-reader/tsv-reader.js';
+
 import { Command } from './command.js';
 
 export class ImportCommand implements Command{

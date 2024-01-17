@@ -1,8 +1,10 @@
 import { readFileSync } from 'node:fs';
-import { HousingType, Offer } from '../../shared/offer.js';
+
+import { HousingType, Offer } from '~/shared/offer.js';
+import { UserAccountTypeEnum } from '~/shared/user.js';
+import { toBoolean } from '~/utils/common.js';
+
 import { FileReader } from './reader.js';
-import { toBoolean } from '../../utils/index.js';
-import { UserAccountTypeEnum } from '../../shared/user.js';
 
 export class TSVFileReader implements FileReader {
   private rawData = '';
@@ -60,7 +62,7 @@ export class TSVFileReader implements FileReader {
         guestsCount: Number(guestsCount),
         rentalPrice: Number.parseInt(rentalPrice, 10),
         improvements: improvements.split(','),
-        author: {accountType: accountType as UserAccountTypeEnum, email, name: userName, avatarPath},
+        author: { accountType: accountType as UserAccountTypeEnum, email, name: userName, avatarPath },
         commentsCount: Number(commentsCount),
         coordinates
       }));
