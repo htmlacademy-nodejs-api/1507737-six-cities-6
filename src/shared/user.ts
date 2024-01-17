@@ -1,5 +1,5 @@
 export enum UserAccountTypeEnum {
-  COMMON = 'common',
+  COMMON = 'обычный',
   PRO = 'pro',
 }
 
@@ -7,5 +7,5 @@ export type User = {
   name: string;
   email: string;
   avatarPath?: string;
-  accountType: 'common' | 'pro';
+  accountType: UserAccountTypeEnum;
 }
