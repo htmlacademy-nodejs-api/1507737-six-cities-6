@@ -9,6 +9,10 @@ export class ImportCommand implements Command{
 
   execute(...parameters: string[]): void {
     const [filename] = parameters;
+    if (!filename) {
+      throw new Error('filename is required');
+    }
+
     const fileReader = new TSVFileReader(filename.trim());
 
     try {

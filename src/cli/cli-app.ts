@@ -8,6 +8,7 @@ export class CLIApp {
   public registerCommands(commandList: Command[]): void {
     this.commands = commandList.reduce((acc, v) => {
       const commandName = v.getName();
+
       if (this.commands[commandName]) {
         throw new Error(`Command ${commandName} is already registered`);
       }
@@ -17,7 +18,7 @@ export class CLIApp {
     }, {} as Record<string, Command>);
   }
 
-  public getCommand(commandName: string) {
+  public getCommand(commandName: string): Command {
     return this.commands[commandName] ?? this.getDefaultCommand();
   }
 

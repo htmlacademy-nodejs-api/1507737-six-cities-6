@@ -15,7 +15,7 @@ export class HelpCommand implements Command {
     Команды:
         ${c.blueBright('--version:')}                   # Вывести номер текущей версии приложения
         ${c.blueBright('--help:')}                      # Показать справку по использованию программы
-        ${c.blueBright('--import <path>:')}             # Импортировать данные из файла формата TSV
+        ${c.blueBright('--import <path>:')}             # Импортировать данные из файла формата .tsv
 `);
   }
 }
