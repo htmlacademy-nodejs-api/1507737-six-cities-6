@@ -1,26 +1,23 @@
 import { CommandParser } from './command-parser.js';
-import { Command } from './commands/index.js';
-
-type CommandCollection = Record<string, Command>;
+import { Command } from './commands/command.js';
 
 export class CLIApp {
-  private commands: CommandCollection = {};
-
-  constructor(
-    private readonly defaultCommand: string = '--help'
-  ) {}
+  private readonly defaultCommand = '--help';
+  private commands: Record<string, Command> = {};
 
   public registerCommands(commandList: Command[]): void {
-    commandList.forEach((command) => {
-      if (Object.hasOwn(this.commands, command.getName())) {
-        throw new Error(`Command ${command.getName()} is already registered`);
+    this.commands = commandList.reduce((acc, v) => {
+      const commandName = v.getName();
+      if (this.commands[commandName]) {
+        throw new Error(`Command ${commandName} is already registered`);
       }
 
-      this.commands[command.getName()] = command;
-    });
+      acc[commandName] = v;
+      return acc;
+    }, {} as Record<string, Command>);
   }
 
-  public getCommand(commandName: string): Command {
+  public getCommand(commandName: string) {
     return this.commands[commandName] ?? this.getDefaultCommand();
   }
 
