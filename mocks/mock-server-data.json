@@ -1,0 +1,103 @@
+{
+  "api": {
+    "names": [
+      "Luxury Penthouse",
+      "Charming Cottage",
+      "City Center Loft",
+      "Seaside Villa",
+      "Modern Apartment",
+      "Cosy Studio",
+      "Lakeview Cabin",
+      "Spacious Townhouse",
+      "Mountain Chalet",
+      "Rural Retreat"
+    ],
+    "descriptions": [
+      "Stunning city views",
+      "Cozy countryside",
+      "Urban living",
+      "Oceanfront retreat",
+      "Tranquil getaway",
+      "Quaint city studio",
+      "Scenic lakeside",
+      "Urban town living",
+      "Alpine retreat",
+      "Central location"
+    ],
+    "cities": [
+      "Paris",
+      "Amsterdam",
+      "Brussels",
+      "Hamburg",
+      "Cologne",
+      "Dusseldorf"
+    ],
+    "images": [
+      "photo3.jpg",
+      "photo4.jpg",
+      "photo5.jpg",
+      "photo6.jpg",
+      "photo7.jpg",
+      "photo8.jpg",
+      "photo9.jpg",
+      "photo10.jpg",
+      "photo11.jpg",
+      "photo12.jpg",
+      "photo13.jpg",
+      "photo14.jpg",
+      "photo15.jpg",
+      "photo16.jpg"
+    ],
+    "housingTypes": [
+      "chalet",
+      "house",
+      "cabin",
+      "apartment"
+    ],
+    "improvements": [
+      "Breakfast",
+      "Air conditioning",
+      "Laptop friendly workspace",
+      "Fireplace",
+      "Garden",
+      "Free parking",
+      "Washer",
+      "Gym",
+      "Private beach",
+      "Swimming pool",
+      "Towels",
+      "Netflix",
+      "Hot tub",
+      "Ski-in/Ski-out",
+      "Private lake"
+    ],
+    "emails": [
+      "bob@example.com",
+      "john@example.com",
+      "alice@example.com",
+      "bob@example.com"
+    ],
+    "coordinates": [
+      "48.85661,2.351499",
+      "52.370216,4.895168",
+      "50.846557,4.351697",
+      "53.550341,10.000654",
+      "50.938361,6.959974",
+      "51.225402,6.776314",
+      "48.85661,2.351499",
+      "52.370216,4.895168"
+    ],
+    "usernames": [
+      "Susan Wilson",
+      "John Miller",
+      "Linda Davis",
+      "Mark Johnson",
+      "Eva Green",
+      "Peter White",
+      "Mary Brown",
+      "Bob Johnson",
+      "Alice Smith",
+      "John Doe"
+    ]
+  }
+}

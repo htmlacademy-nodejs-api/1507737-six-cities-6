@@ -27,7 +27,7 @@
       "ESNext"
     ],
     "paths": {
-      "~/*": ["./src/*"],
+      "#*": ["./src/*"],
     }
   },
   "include": [
@@ -38,6 +38,7 @@
     "**/*.test.ts"
   ],
   "ts-node": {
+    "transpileOnly": true,
     "esm": true
   }
 }
