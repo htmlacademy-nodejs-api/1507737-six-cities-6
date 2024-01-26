@@ -1,23 +1,36 @@
-import { TSVFileReader } from '~/lib/file-reader/tsv-reader.js';
+import invariant from 'tiny-invariant';
+
+import { TSVFileReader } from '#lib/file-reader/index.js';
+import { createOffer } from '#shared/offer.js';
 
 import { Command } from './command.js';
 
-export class ImportCommand implements Command{
+export class ImportCommand implements Command {
   getName(): string {
     return '--import';
   }
 
+  private onImportedLine(line: string) {
+    const offer = createOffer(line);
+    console.info(offer);
+  }
+
+  private onCompleteImport(count: number) {
+    console.info(`${count} rows imported.`);
+  }
+
   execute(...parameters: string[]): void {
     const [filename] = parameters;
-    if (!filename) {
-      throw new Error('filename is required');
-    }
+
+    invariant(filename, 'filename is required');
 
     const fileReader = new TSVFileReader(filename.trim());
 
+    fileReader.on('line', this.onImportedLine);
+    fileReader.on('end', this.onCompleteImport);
+
     try {
       fileReader.read();
-      console.log(fileReader.toArray());
     } catch (err) {
 
       if (!(err instanceof Error)) {
