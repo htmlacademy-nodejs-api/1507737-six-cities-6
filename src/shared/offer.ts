@@ -30,7 +30,6 @@ export type Offer = {
   coordinates: string;
 }
 
-
 export function createOffer(offerData: string): Offer {
   const [
     name,
