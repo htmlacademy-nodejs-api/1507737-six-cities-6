@@ -1,8 +1,8 @@
 import { CLIApp } from './cli-app.js';
-import { GenerateCommand } from './commands/generate.js';
-import { HelpCommand } from './commands/help.js';
-import { ImportCommand } from './commands/import.js';
-import { VersionCommand } from './commands/version.js';
+import { GenerateCommand } from './commands/generate.command.js';
+import { HelpCommand } from './commands/help.command.js';
+import { ImportCommand } from './commands/import.command.js';
+import { VersionCommand } from './commands/version.command.js';
 
 export function run() {
   const cli = new CLIApp();

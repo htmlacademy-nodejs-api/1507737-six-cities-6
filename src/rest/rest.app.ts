@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 
-import { RestAppConfig } from '#config/index.js';
-import { Logger } from '#lib/logger.js';
-import { Component } from '#shared/enums.js';
+import { RestAppConfig } from '#config/rest/index.js';
+import { Logger } from '#lib/logger/index.js';
+import { Component } from '#types/component.enum.js';
 
 @injectable()
 export class RestApp {
@@ -11,7 +11,7 @@ export class RestApp {
     @inject(Component.Config) private readonly config: RestAppConfig,
   ) {}
 
-  public async init() {
+  public init() {
     this.logger.info('Application initialization');
     this.logger.info(`Get value from env $PORT: ${this.config.get('PORT')}`);
   }

@@ -3,10 +3,10 @@ import invariant from 'tiny-invariant';
 
 import { TSVFileWriter } from '#lib/file-writer/index.js';
 import { TSVOfferGenerator } from '#lib/offer-generator/index.js';
-import { MockServerData } from '#shared/common.js';
+import { MockServerData } from '#types/mock-server-data.types.js';
 import { getErrorMessage } from '#utils/common.js';
 
-import { Command } from './command.js';
+import { Command } from './command.interface.js';
 
 export class GenerateCommand implements Command {
   private initialData?: MockServerData;

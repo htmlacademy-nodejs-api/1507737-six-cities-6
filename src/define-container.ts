@@ -1,9 +1,9 @@
 import { Container } from 'inversify';
 
 import { RestAppConfig,RestConfig} from '#config/rest/index.js';
-import { Logger, PinoLogger } from '#lib/logger.js';
-import { RestApp } from '#rest/app.js';
-import { Component } from '#shared/enums.js';
+import { Logger, PinoLogger } from '#lib/logger/index.js';
+import { RestApp } from '#rest/index.js';
+import { Component } from '#types/component.enum.js';
 
 export function defineContainer() {
   const container = new Container();

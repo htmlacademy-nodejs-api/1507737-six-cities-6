@@ -1,7 +1,4 @@
-export enum UserAccountType {
-  COMMON = 'обычный',
-  PRO = 'pro',
-}
+import { UserAccountType } from './user-account.enum.js';
 
 export type User = {
   name: string;

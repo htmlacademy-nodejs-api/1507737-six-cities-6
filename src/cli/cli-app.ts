@@ -1,5 +1,5 @@
 import { CommandParser } from './command-parser.js';
-import { Command } from './commands/command.js';
+import { Command } from './commands/command.interface.js';
 
 export class CLIApp {
   private readonly defaultCommand = '--help';
