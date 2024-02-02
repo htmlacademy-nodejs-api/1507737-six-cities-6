@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
-import { MockServerData } from '#shared/common.js';
-import { UserAccountType } from '#shared/user.js';
+import { MockServerData } from '#types/mock-server-data.types.js';
+import { UserAccountType } from '#types/user-account.enum.js';
 import {
   generateRandomValue,
   getRandomBoolean,
@@ -9,6 +9,7 @@ import {
   getRandomItems
 } from '#utils/generate.js';
 
+import { OfferGenerator } from './offer-generator.interface.js';
 import {
   OfferGeneratorComments,
   OfferGeneratorGuests,
@@ -16,8 +17,7 @@ import {
   OfferGeneratorRating,
   OfferGeneratorRooms,
   OfferGeneratorWeekDays
-} from './constants.js';
-import { OfferGenerator } from './generator.js';
+} from './tsv-offer-generator.enum.js';
 
 export class TSVOfferGenerator implements OfferGenerator {
   constructor(private readonly mockData: MockServerData) { }

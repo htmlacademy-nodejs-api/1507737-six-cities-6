@@ -1,14 +1,9 @@
 
 import { toBoolean } from '#utils/common.js';
 
-import { User, UserAccountType } from './user.js';
-
-export enum HousingType {
-  APARTMENT = 'apartment',
-  HOUSE = 'house',
-  ROOM = 'room',
-  HOTEL = 'hotel'
-}
+import { OfferType } from './offer-type.enum.js';
+import { User } from './user.types.js';
+import { UserAccountType } from './user-account.enum.js';
 
 export type Offer = {
   name: string;
@@ -20,7 +15,7 @@ export type Offer = {
   isPremium: boolean;
   isFavorite: boolean;
   rating: number;
-  housingType: HousingType;
+  housingType: OfferType;
   roomsCount: number;
   guestsCount: number;
   rentalPrice: number;
@@ -29,7 +24,6 @@ export type Offer = {
   commentsCount: number;
   coordinates: string;
 }
-
 
 export function createOffer(offerData: string): Offer {
   const [
@@ -72,7 +66,7 @@ export function createOffer(offerData: string): Offer {
     isPremium: toBoolean(isPremium),
     isFavorite: toBoolean(isFavorite),
     rating: Number.parseFloat(rating),
-    housingType: housingType as HousingType,
+    housingType: housingType as OfferType,
     roomsCount: Number(roomsCount),
     guestsCount: Number(guestsCount),
     rentalPrice: Number.parseInt(rentalPrice, 10),

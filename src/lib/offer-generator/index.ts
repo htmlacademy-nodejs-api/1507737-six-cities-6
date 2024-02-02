@@ -1,1 +1,1 @@
-export {TSVOfferGenerator} from './tsv-generator.js';
+export {TSVOfferGenerator} from './tsv-offer-generator.js';

@@ -1,6 +1,6 @@
 import c from 'chalk';
 
-import { Command } from './command.js';
+import { Command } from './command.interface.js';
 
 export class HelpCommand implements Command {
   getName(): string {

@@ -1,1 +1,1 @@
-export {TSVFileWriter} from './tsv-writer.js';
+export {TSVFileWriter} from './tsv-file-writer.js';

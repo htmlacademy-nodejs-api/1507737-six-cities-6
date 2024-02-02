@@ -1,9 +1,9 @@
 import invariant from 'tiny-invariant';
 
 import { TSVFileReader } from '#lib/file-reader/index.js';
-import { createOffer } from '#shared/offer.js';
+import { createOffer } from '#types/offer.types.js';
 
-import { Command } from './command.js';
+import { Command } from './command.interface.js';
 
 export class ImportCommand implements Command {
   getName(): string {
