@@ -1,4 +1,4 @@
-import { Config } from '#config/config.interface.js';
+import { Config } from './config.interface.js';
 
 export type RestSchema = {
   PORT: number;

@@ -1,6 +1,6 @@
-import convict from 'convict';
+import convict from '#lib/convict.js';
 
-import { RestSchema } from './rest.types.js';
+import { RestSchema } from './types/rest-config.types.js';
 
 export const configRestSchema = convict<RestSchema>({
   PORT: {

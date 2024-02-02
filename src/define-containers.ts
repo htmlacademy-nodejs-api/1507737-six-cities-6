@@ -1,11 +1,12 @@
 import { Container } from 'inversify';
 
-import { RestAppConfig,RestConfig} from '#config/rest/index.js';
-import { Logger, PinoLogger } from '#lib/logger/index.js';
-import { RestApp } from '#rest/index.js';
+import { RestAppConfig, RestConfig } from '#modules/config/index.js';
+import { Logger, PinoLogger } from '#modules/logger/index.js';
+import { RestApp } from '#modules/rest/index.js';
 import { Component } from '#types/component.enum.js';
 
-export function defineContainer() {
+
+export function defineContainers() {
   const container = new Container();
   container.bind<RestApp>(Component.RestApp).to(RestApp).inSingletonScope();
   container.bind<Logger>(Component.Logger).to(PinoLogger).inSingletonScope();
