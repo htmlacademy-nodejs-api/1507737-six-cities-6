@@ -1,6 +1,5 @@
 import { Container } from 'inversify';
 
-import { createCategoryContainer } from '#modules/category/category.container.js';
 import { createCommentContainer } from '#modules/comment/index.js';
 import { createOfferContainer } from '#modules/offer/offer.container.js';
 import { RestApp } from '#modules/rest/index.js';
@@ -13,8 +12,7 @@ export function defineRootContainer() {
     createRestAppContainer(),
     createOfferContainer(),
     createUserContainer(),
-    createCommentContainer(),
-    createCategoryContainer(),
+    createCommentContainer()
   );
 
   return {

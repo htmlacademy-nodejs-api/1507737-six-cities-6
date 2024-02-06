@@ -7,5 +7,4 @@ export class CreateOfferDto {
   public type!: OfferType;
   public price!: number;
   public authorId!: string;
-  public categoryId!: string;
 }

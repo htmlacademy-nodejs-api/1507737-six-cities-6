@@ -22,10 +22,9 @@ export class OfferEntity {
 
   @prop({
     required: true,
-    type: () => String,
-    enum: OfferCity,
+    type: () => String
   })
-  public city!: string;
+  public city!: OfferCity;
 
   @prop({ required: true })
   public preview!: string;
@@ -44,8 +43,7 @@ export class OfferEntity {
 
   @prop({
     required: true,
-    type: () => String,
-    enum: OfferType,
+    type: () => String
   })
   public type!: OfferType;
 
@@ -61,7 +59,6 @@ export class OfferEntity {
   @prop({
     required: true,
     type: () => String,
-    enum: OfferImporovements,
   })
   public imrovements!: OfferImporovements[];
 
@@ -71,10 +68,18 @@ export class OfferEntity {
   @prop({required: true})
   public coordinate!: OfferCoordinate;
 
-  @prop({ ref: () => UserEntity, required: true, _id: false })
+  @prop({
+    ref: () => UserEntity,
+    required: true,
+    _id: false
+  })
   public user!: Ref<UserEntity>;
 
-  @prop({ ref: () => CommentEntity, required: true, _id: false })
+  @prop({
+    ref: () => CommentEntity,
+    required: true,
+    _id: false
+  })
   public comments!: Ref<CommentEntity>[];
 }
 

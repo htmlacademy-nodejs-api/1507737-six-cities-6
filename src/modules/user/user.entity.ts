@@ -1,4 +1,4 @@
-import { getModelForClass, modelOptions, prop,Ref } from '@typegoose/typegoose';
+import { modelOptions, prop,Ref } from '@typegoose/typegoose';
 
 import { CommentEntity } from '#modules/comment/index.js';
 import { OfferEntity } from '#modules/offer/index.js';
@@ -30,7 +30,7 @@ export class UserEntity {
     default: [],
     _id: false
   })
-  public offers!: Ref<OfferEntity>[];
+  public favorites!: Ref<OfferEntity>[];
 
   @prop({
     ref: () => CommentEntity,
@@ -46,5 +46,3 @@ export class UserEntity {
   })
   public accountType?: UserAccountType;
 }
-
-export const UserModel = getModelForClass(UserEntity);
