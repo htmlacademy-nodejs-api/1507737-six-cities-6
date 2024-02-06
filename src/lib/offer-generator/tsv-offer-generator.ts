@@ -20,7 +20,7 @@ import {
 } from './tsv-offer-generator.enum.js';
 
 export class TSVOfferGenerator implements OfferGenerator {
-  constructor(private readonly mockData: MockServerData) { }
+  constructor(private readonly mockData: MockServerData) {}
 
   generate(): string {
     const name = getRandomItem(this.mockData.names);

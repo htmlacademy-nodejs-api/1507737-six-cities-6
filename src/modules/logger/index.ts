@@ -1,2 +1,3 @@
+export {ConsoleLogger} from './console.logger.js';
 export {PinoLogger} from './pino.logger.js';
-export {Logger} from './types/logger.interface.js';
+export type {Logger} from './types/logger.interface.js';

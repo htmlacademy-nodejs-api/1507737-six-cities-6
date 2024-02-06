@@ -1,1 +1,1 @@
-export {RestApp} from './app.rest.js';
+export {RestApp} from './rest.module.js';

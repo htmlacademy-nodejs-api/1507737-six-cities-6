@@ -1,28 +1,81 @@
 import invariant from 'tiny-invariant';
 
 import { TSVFileReader } from '#lib/file-reader/index.js';
-import { createOffer } from '#types/offer.types.js';
+import { CategoryModel } from '#modules/category/index.js';
+import { CategoryService, CategoryServiceImpl } from '#modules/category/index.js';
+import { CommentModel, CommentService, CommentServiceImpl } from '#modules/comment/index.js';
+import { RestAppConfig, RestConfig } from '#modules/config/index.js';
+import { DBClient, MongoDB } from '#modules/db/index.js';
+import { ConsoleLogger, Logger } from '#modules/logger/index.js';
+import { OfferService, OfferServiceImpl } from '#modules/offer/index.js';
+import { OfferModel } from '#modules/offer/index.js';
+import { UserModel, UserService, UserServiceImpl } from '#modules/user/index.js';
+import { createOffer,Offer } from '#types/offer.types.js';
+import { getMongoURI } from '#utils/common.js';
 
 import { Command } from './command.interface.js';
+import { MOCK_USER_PASSWORD } from './command.utils.js';
 
 export class ImportCommand implements Command {
+  private userService: UserService;
+  private categoryService: CategoryService;
+  private offerService: OfferService;
+  private commentService: CommentService;
+  private logger: Logger;
+  private mongo: DBClient;
+  private config: RestAppConfig;
+
+  constructor() {
+    this.onImportedLine = this.onImportedLine.bind(this);
+    this.onCompleteImport = this.onCompleteImport.bind(this);
+
+    this.logger = new ConsoleLogger();
+    this.offerService = new OfferServiceImpl(OfferModel, this.logger);
+    this.userService = new UserServiceImpl(UserModel, this.logger);
+    this.categoryService = new CategoryServiceImpl(CategoryModel);
+    this.commentService = new CommentServiceImpl(CommentModel, this.logger);
+    this.mongo = new MongoDB(this.logger);
+    this.config = new RestConfig(this.logger);
+  }
+
   getName(): string {
     return '--import';
   }
 
-  private onImportedLine(line: string) {
+  private async onImportedLine(line: string, resolve: () => void) {
     const offer = createOffer(line);
-    console.info(offer);
+    await this.saveOffer(offer);
+    resolve();
   }
 
   private onCompleteImport(count: number) {
     console.info(`${count} rows imported.`);
+    this.mongo.disconnect();
   }
 
-  execute(...parameters: string[]): void {
+  private async saveOffer(offer: Offer) {
+    const categories = await this.categoryService.createMany();
+
+    console.log(categories);
+
+
+    // await this.userService.create({password: MOCK_USER_PASSWORD});
+  }
+
+  async execute(...parameters: string[]) {
     const [filename] = parameters;
 
     invariant(filename, 'filename is required');
+
+    const mongoUri = getMongoURI(
+      this.config.get('DB_USER'),
+      this.config.get('DB_PASSWORD'),
+      this.config.get('DB_HOST'),
+      this.config.get('DB_PORT'),
+      this.config.get('DB_NAME'),
+    );
+
+    await this.mongo.connect(mongoUri);
 
     const fileReader = new TSVFileReader(filename.trim());
 

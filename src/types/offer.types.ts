@@ -1,7 +1,7 @@
 
+import { OfferType } from '#modules/offer/index.js';
 import { toBoolean } from '#utils/common.js';
 
-import { OfferType } from './offer-type.enum.js';
 import { User } from './user.types.js';
 import { UserAccountType } from './user-account.enum.js';
 
