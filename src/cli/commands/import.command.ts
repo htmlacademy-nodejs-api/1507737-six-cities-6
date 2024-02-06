@@ -14,7 +14,6 @@ import { createOffer,Offer } from '#types/offer.types.js';
 import { getMongoURI } from '#utils/common.js';
 
 import { Command } from './command.interface.js';
-import { MOCK_USER_PASSWORD } from './command.utils.js';
 
 export class ImportCommand implements Command {
   private userService: UserService;
@@ -54,12 +53,7 @@ export class ImportCommand implements Command {
   }
 
   private async saveOffer(offer: Offer) {
-    const categories = await this.categoryService.createMany();
-
-    console.log(categories);
-
-
-    // await this.userService.create({password: MOCK_USER_PASSWORD});
+    await this.categoryService.createMany();
   }
 
   async execute(...parameters: string[]) {
