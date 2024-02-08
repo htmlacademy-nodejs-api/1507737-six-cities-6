@@ -1,5 +1,6 @@
 import { Container } from 'inversify';
 
+import { createCLIContainer } from '#cli/commands/command.container.js';
 import { createCommentContainer } from '#modules/comment/index.js';
 import { createOfferContainer } from '#modules/offer/offer.container.js';
 import { RestApp } from '#modules/rest/index.js';
@@ -12,10 +13,14 @@ export function defineRootContainer() {
     createRestAppContainer(),
     createOfferContainer(),
     createUserContainer(),
-    createCommentContainer()
+    createCommentContainer(),
+    createCLIContainer()
   );
 
-  return {
-    app: rootContainer.get<RestApp>(Component.RestApp)
-  };
+  return rootContainer;
+}
+
+export function getRootContainer() {
+  const rootContainer = defineRootContainer();
+  return rootContainer.get<RestApp>(Component.RestApp);
 }

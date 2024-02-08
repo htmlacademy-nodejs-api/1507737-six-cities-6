@@ -1,34 +1,23 @@
+import { inject, injectable } from 'inversify';
 import invariant from 'tiny-invariant';
 
 import { TSVFileReader } from '#lib/file-reader/index.js';
-import { CommentModel, CommentService, CommentServiceImpl } from '#modules/comment/index.js';
-import { RestAppConfig, RestConfig } from '#modules/config/index.js';
-import { DBClient, MongoDB } from '#modules/db/index.js';
-import { ConsoleLogger, Logger } from '#modules/logger/index.js';
+import { CommentService } from '#modules/comment/index.js';
+import { RestAppConfig } from '#modules/config/index.js';
+import { MongoDB } from '#modules/db/index.js';
+import { Component } from '#types/component.enum.js';
 import { createOffer,Offer } from '#types/offer.types.js';
 import { getMongoURI } from '#utils/common.js';
 
 import { Command } from './command.interface.js';
 
+@injectable()
 export class ImportCommand implements Command {
-  // private userService: UserService;
-  // private offerService: OfferService;
-  private commentService: CommentService;
-  private logger: Logger;
-  private mongo: DBClient;
-  private config: RestAppConfig;
-
-  constructor() {
-    this.onImportedLine = this.onImportedLine.bind(this);
-    this.onCompleteImport = this.onCompleteImport.bind(this);
-
-    this.logger = new ConsoleLogger();
-    // this.offerService = new OfferServiceImpl(OfferModel, this.logger);
-    // this.userService = new UserServiceImpl(UserModel, this.logger);
-    this.commentService = new CommentServiceImpl(CommentModel, this.logger);
-    this.mongo = new MongoDB(this.logger);
-    this.config = new RestConfig(this.logger);
-  }
+  constructor(
+    @inject(Component.MongoDB) private readonly mongo: MongoDB,
+    @inject(Component.Config) private readonly config: RestAppConfig,
+    @inject(Component.CommentService) private readonly commentService: CommentService,
+  ) {}
 
   getName(): string {
     return '--import';
@@ -53,6 +42,8 @@ export class ImportCommand implements Command {
     const [filename] = parameters;
 
     invariant(filename, 'filename is required');
+
+    console.log('this.config', this.config);
 
     const mongoUri = getMongoURI(
       this.config.get('DB_USER'),
