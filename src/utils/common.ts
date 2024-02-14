@@ -9,8 +9,7 @@ export function getErrorMessage(error: unknown): string {
 }
 
 export function createSHA256(line: string, salt: string): string {
-  const shaHasher = crypto.createHmac('sha256', salt);
-  return shaHasher.update(line).digest('hex');
+  return crypto.createHmac('sha256', salt).update(line).digest('hex');
 }
 
 export function getMongoURI(

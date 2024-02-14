@@ -1,9 +1,11 @@
 import { modelOptions, prop,Ref } from '@typegoose/typegoose';
 
-import { CommentEntity } from '#modules/comment/index.js';
-import { OfferEntity } from '#modules/offer/index.js';
-import { UserAccountType } from '#types/user-account.enum.js';
-import { getRandomAvatarUrl } from '#utils/generate.js';
+import { createSHA256 } from '../../utils/common.js';
+import { getRandomAvatarUrl } from '../../utils/generate.js';
+import { CommentEntity } from '../comment/comment.entity.js';
+import { OfferEntity } from '../offer/offer.entity.js';
+import { CreateUserDto } from './dto/create-user.dto.js';
+import { UserAccountType } from './types/user.enum.js';
 
 @modelOptions({
   schemaOptions: {
@@ -19,8 +21,8 @@ export class UserEntity {
   @prop({ required: true, unique: true, type: () => String })
   public email!: string;
 
-  @prop({ default: getRandomAvatarUrl(), type: () => String })
-  public avatar!: string;
+  @prop({ required: false, default: getRandomAvatarUrl(), type: () => String })
+  public avatar?: string;
 
   @prop({ required: true, type: () => String })
   public passwordHash!: string;
@@ -40,9 +42,16 @@ export class UserEntity {
   public comments!: Ref<CommentEntity>[];
 
   @prop({
+    required: true,
     type: () => String,
-    enum: UserAccountType,
-    default: UserAccountType.COMMON
   })
-  public accountType?: UserAccountType;
+  public accountType: UserAccountType;
+
+  constructor(user: CreateUserDto, salt: string) {
+    this.name = user.name;
+    this.email = user.email;
+    this.accountType = user.accountType;
+    this.avatar = user.avatar;
+    this.passwordHash = createSHA256(user.password, salt);
+  }
 }

@@ -1,12 +1,12 @@
 import { Container } from 'inversify';
 
-import { createCLIContainer } from '#cli/commands/command.container.js';
-import { createCommentContainer } from '#modules/comment/index.js';
-import { createOfferContainer } from '#modules/offer/offer.container.js';
-import { RestApp } from '#modules/rest/index.js';
-import { createRestAppContainer } from '#modules/rest/rest.container.js';
-import { createUserContainer } from '#modules/user/index.js';
-import { Component } from '#types/component.enum.js';
+import { createCLIContainer } from './cli/commands/command.container.js';
+import { createRestAppContainer } from './lib/rest/rest.container.js';
+import { RestApp } from './lib/rest/rest.module.js';
+import { createCommentContainer } from './modules/comment/comment.container.js';
+import { createOfferContainer } from './modules/offer/offer.container.js';
+import { createUserContainer } from './modules/user/user.container.js';
+import { Component } from './types/component.enum.js';
 
 export function defineRootContainer() {
   const rootContainer = Container.merge(

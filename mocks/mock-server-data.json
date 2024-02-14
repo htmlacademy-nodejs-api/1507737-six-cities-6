@@ -72,10 +72,16 @@
       "Private lake"
     ],
     "emails": [
-      "bob@example.com",
-      "john@example.com",
-      "alice@example.com",
-      "bob@example.com"
+      "example1@gmail.com",
+      "testuser123@yahoo.com",
+      "random.email@hotmail.com",
+      "dummyaccount@outlook.com",
+      "newuser@emailprovider.net",
+      "sample.email@gmail.com",
+      "tempmail123@yahoo.com",
+      "generic.user@hotmail.com",
+      "fake.address@emailservice.org",
+      "throwaway.acc@gmail.com"
     ],
     "coordinates": [
       "48.85661,2.351499",

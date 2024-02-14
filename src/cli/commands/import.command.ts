@@ -1,30 +1,39 @@
 import { inject, injectable } from 'inversify';
+import { Error } from 'mongoose';
 import invariant from 'tiny-invariant';
 
-import { TSVFileReader } from '#lib/file-reader/index.js';
-import { CommentService } from '#modules/comment/index.js';
-import { RestAppConfig } from '#modules/config/index.js';
-import { MongoDB } from '#modules/db/index.js';
-import { Component } from '#types/component.enum.js';
-import { createOffer,Offer } from '#types/offer.types.js';
-import { getMongoURI } from '#utils/common.js';
-
+import { RestAppConfig } from '../../lib/config/types/rest-config.types.js';
+import type { MongoDB } from '../../lib/db/mongo.module.js';
+import { TSVFileReader } from '../../lib/file-reader/tsv-file-reader.js';
+import { OfferService } from '../../modules/offer/types/offer.service.interface.js';
+import { UserService } from '../../modules/user/types/user.service.interface.js';
+import { Component } from '../../types/component.enum.js';
+import { MockOffer } from '../../types/mock.types.js';
+import { getMongoURI } from '../../utils/common.js';
+import { generatePassword } from '../../utils/generate.js';
+import { createMockOffer } from '../../utils/mocks.js';
 import { Command } from './command.interface.js';
 
 @injectable()
 export class ImportCommand implements Command {
+  private salt!: string;
+
   constructor(
     @inject(Component.MongoDB) private readonly mongo: MongoDB,
     @inject(Component.Config) private readonly config: RestAppConfig,
-    @inject(Component.CommentService) private readonly commentService: CommentService,
-  ) {}
+    @inject(Component.UserService) private readonly userService: UserService,
+    @inject(Component.OfferService) private readonly offerService: OfferService,
+  ) {
+    this.onImportedLine = this.onImportedLine.bind(this);
+    this.onCompleteImport = this.onCompleteImport.bind(this);
+  }
 
   getName(): string {
     return '--import';
   }
 
   private async onImportedLine(line: string, resolve: () => void) {
-    const offer = createOffer(line);
+    const offer = createMockOffer(line);
     await this.saveOffer(offer);
     resolve();
   }
@@ -34,23 +43,54 @@ export class ImportCommand implements Command {
     this.mongo.disconnect();
   }
 
-  private async saveOffer(_offer: Offer) {
-    await this.commentService.create({authorId: '', offerId: '', text: ''});
+  private async saveOffer(offer: MockOffer) {
+    const user = await this.userService.create({
+      ...offer.author,
+      password: generatePassword()
+    }, this.salt);
+
+    await this.offerService.create({
+      authorId: user.id,
+      city: offer.city,
+      coordinate: offer.coordinate,
+      description: offer.description,
+      guestsCount: offer.guestsCount,
+      housingPhotos: offer.housingPhotos,
+      imrovements: offer.improvements,
+      name: offer.name,
+      preview: offer.preview,
+      rentalPrice: offer.rentalPrice,
+      type: offer.type,
+      roomsCount: offer.roomsCount,
+      isPremium: offer.isPremium,
+    });
   }
 
-  async execute(...parameters: string[]) {
-    const [filename] = parameters;
+  async execute(
+    filename: string,
+    dbUser: string = this.config.get('DB_USER'),
+    dbPassword: string = this.config.get('DB_PASSWORD'),
+    dbHost: string = this.config.get('DB_HOST'),
+    dnPort: string = this.config.get('DB_PORT'),
+    dbName: string = this.config.get('DB_NAME'),
+    salt: string = this.config.get('SALT')
+  ) {
 
     invariant(filename, 'filename is required');
+    invariant(dbUser, 'dbUser is required');
+    invariant(dbPassword, 'dbPassword is required');
+    invariant(dbHost, 'dbHost is required');
+    invariant(dnPort, 'dnPort is required');
+    invariant(dbName, 'dbName is required');
+    invariant(salt, 'salt is required');
 
-    console.log('this.config', this.config);
-
+    this.salt = salt;
     const mongoUri = getMongoURI(
-      this.config.get('DB_USER'),
-      this.config.get('DB_PASSWORD'),
-      this.config.get('DB_HOST'),
-      this.config.get('DB_PORT'),
-      this.config.get('DB_NAME'),
+      dbUser,
+      dbPassword,
+      dbHost,
+      dnPort,
+      dbName,
     );
 
     await this.mongo.connect(mongoUri);

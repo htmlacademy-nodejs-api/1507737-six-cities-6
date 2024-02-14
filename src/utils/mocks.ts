@@ -1,42 +1,30 @@
+import { OfferImporovements, OfferType } from '../modules/offer/types/offer.enum.js';
+import { OfferCoordinate } from '../modules/offer/types/offer.types.js';
+import { UserAccountType } from '../modules/user/types/user.enum.js';
+import { MockOffer} from '../types/mock.types.js';
+import { toBoolean } from './common.js';
 
-import { OfferType } from '#modules/offer/index.js';
-import { toBoolean } from '#utils/common.js';
+function parseCoordinateString(coordinateRaw: string): OfferCoordinate {
+  const [latitude, longitude] = coordinateRaw.split(',');
 
-import { User } from './user.types.js';
-import { UserAccountType } from './user-account.enum.js';
-
-export type Offer = {
-  name: string;
-  description: string;
-  publishAt: string;
-  city: string;
-  previewImage: string;
-  housingPhotos: string[];
-  isPremium: boolean;
-  isFavorite: boolean;
-  rating: number;
-  housingType: OfferType;
-  roomsCount: number;
-  guestsCount: number;
-  rentalPrice: number;
-  improvements: string[];
-  author: User;
-  commentsCount: number;
-  coordinates: string;
+  return {
+    latitude: Number.parseFloat(latitude),
+    longitude: Number.parseFloat(longitude)
+  };
 }
 
-export function createOffer(offerData: string): Offer {
+export function createMockOffer(offerData: string): MockOffer {
   const [
     name,
     description,
     publishAt,
     city,
-    previewImage,
+    preview,
     housingPhotos,
     isPremium,
     isFavorite,
     rating,
-    housingType,
+    type,
     roomsCount,
     guestsCount,
     rentalPrice,
@@ -46,14 +34,14 @@ export function createOffer(offerData: string): Offer {
     avatarPath,
     accountType,
     commentsCount,
-    coordinates
+    coordinate
   ] = offerData.replace('\n', '').split('\t');
 
   const author = {
     accountType: accountType as UserAccountType,
     email,
     name: userName,
-    avatarPath
+    avatar: avatarPath
   };
 
   return {
@@ -61,18 +49,18 @@ export function createOffer(offerData: string): Offer {
     description,
     publishAt,
     city,
-    previewImage,
+    preview,
     housingPhotos: housingPhotos.split(';'),
     isPremium: toBoolean(isPremium),
     isFavorite: toBoolean(isFavorite),
     rating: Number.parseFloat(rating),
-    housingType: housingType as OfferType,
+    type: type as OfferType,
     roomsCount: Number(roomsCount),
     guestsCount: Number(guestsCount),
     rentalPrice: Number.parseInt(rentalPrice, 10),
-    improvements: improvements.split(';'),
+    improvements: improvements.split(';') as OfferImporovements[],
     author: author,
     commentsCount: Number(commentsCount),
-    coordinates
+    coordinate: parseCoordinateString(coordinate),
   };
 }

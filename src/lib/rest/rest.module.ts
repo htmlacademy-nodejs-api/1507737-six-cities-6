@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
 
-import { RestAppConfig } from '#modules/config/index.js';
-import { MongoDB } from '#modules/db/mongo.module.js';
-import { Logger } from '#modules/logger/index.js';
-import { Component } from '#types/component.enum.js';
-import { getMongoURI } from '#utils/common.js';
+import { Component } from '../../types/component.enum.js';
+import { getMongoURI } from '../../utils/common.js';
+import type { RestAppConfig } from '../config/types/rest-config.types.js';
+import { MongoDB } from '../db/mongo.module.js';
+import type { Logger } from '../logger/types/logger.interface.js';
+
 
 @injectable()
 export class RestApp {

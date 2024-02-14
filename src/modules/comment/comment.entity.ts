@@ -1,7 +1,7 @@
 import { modelOptions, prop,Ref } from '@typegoose/typegoose';
 
-import { OfferEntity } from '#modules/offer/index.js';
-import { UserEntity } from '#modules/user/index.js';
+import { OfferEntity } from '../offer/offer.entity.js';
+import { UserEntity } from '../user/user.entity.js';
 
 @modelOptions({
   schemaOptions: {

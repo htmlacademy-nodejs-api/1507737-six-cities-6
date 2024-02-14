@@ -1,9 +1,8 @@
 import { types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
 
-import { Logger } from '#modules/logger/index.js';
-import { Component } from '#types/component.enum.js';
-
+import { Logger } from '../../lib/logger/types/logger.interface.js';
+import { Component } from '../../types/component.enum.js';
 import { CommentEntity } from './comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 import { CommentService } from './types/comment.service.interface.js';

@@ -1,10 +1,9 @@
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 
-import { CommentEntity } from '#modules/comment/index.js';
-import { UserEntity } from '#modules/user/index.js';
-
+import { CommentEntity } from '../comment/comment.entity.js';
+import { UserEntity } from '../user/user.entity.js';
 import { OfferCity, OfferImporovements, OfferType } from './types/offer.enum.js';
-import { OfferCoordinate } from './types/offer.types.js';
+import type { OfferCoordinate } from './types/offer.types.js';
 
 @modelOptions({
   schemaOptions: {
@@ -15,7 +14,7 @@ import { OfferCoordinate } from './types/offer.types.js';
 })
 export class OfferEntity {
   @prop({ required: true, trim: true })
-  public title!: string;
+  public name!: string;
 
   @prop({ required: true, trim: true })
   public description!: string;
@@ -29,17 +28,14 @@ export class OfferEntity {
   @prop({ required: true })
   public preview!: string;
 
-  @prop({ required: true })
+  @prop({ required: true, type: () => [String] })
   public housingPhotos!: string[];
 
   @prop({ required: true })
   public isPremium!: boolean;
 
-  @prop({ required: true })
-  public isFavorite!: boolean;
-
-  @prop({ required: true })
-  public rating!: number;
+  @prop({ required: false, default: 0 })
+  public rating?: number;
 
   @prop({
     required: true,
@@ -58,28 +54,28 @@ export class OfferEntity {
 
   @prop({
     required: true,
-    type: () => String,
+    type: () => [String],
   })
   public imrovements!: OfferImporovements[];
 
   @prop({ default: 0 })
   public commentCount!: number;
 
-  @prop({required: true})
+  @prop({ required: true })
   public coordinate!: OfferCoordinate;
 
   @prop({
     ref: () => UserEntity,
-    required: true,
     _id: false
   })
-  public user!: Ref<UserEntity>;
+  public user?: Ref<UserEntity>;
 
   @prop({
     ref: () => CommentEntity,
-    required: true,
+    required: false,
+    default: [],
     _id: false
   })
-  public comments!: Ref<CommentEntity>[];
+  public comments?: Ref<CommentEntity>[];
 }
 

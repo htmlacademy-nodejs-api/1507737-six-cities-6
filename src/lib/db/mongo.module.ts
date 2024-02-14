@@ -4,18 +4,20 @@ import { inject, injectable } from 'inversify';
 import * as Mongoose from 'mongoose';
 import invariant from 'tiny-invariant';
 
-import { Logger } from '#modules/logger/index.js';
-import { Component } from '#types/component.enum.js';
-
+import { Component } from '../../types/component.enum.js';
+import type { Logger } from '../logger/types/logger.interface.js';
 import { DBClient } from './db.interface.js';
 import { RETRY_COUNT, RETRY_TIMEOUT } from './mongo.constants.js';
 
 @injectable()
 export class MongoDB implements DBClient {
   private mongoose!: typeof Mongoose;
-  private isConnected = false;
 
   constructor(@inject(Component.Logger) private readonly logger: Logger) {}
+
+  private get isConnected() {
+    return this.mongoose.connection.readyState === Mongoose.STATES.connected;
+  }
 
   async connect(uri: string): Promise<void> {
     if (this.isConnected) {
@@ -30,7 +32,6 @@ export class MongoDB implements DBClient {
     while (attempt < RETRY_COUNT) {
       try {
         this.mongoose = await Mongoose.connect(uri);
-        this.isConnected = true;
 
         this.logger.info('Database connection established.');
         return;
@@ -50,7 +51,6 @@ export class MongoDB implements DBClient {
     }
 
     await this.mongoose.disconnect();
-    this.isConnected = false;
     this.logger.info('Database connection closed.');
   }
 }

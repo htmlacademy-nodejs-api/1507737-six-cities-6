@@ -2,9 +2,8 @@
 import { types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
 
-import { Logger } from '#modules/logger/index.js';
-import { Component } from '#types/component.enum.js';
-
+import type { Logger } from '../../lib/logger/types/logger.interface.js';
+import { Component } from '../../types/component.enum.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { OfferEntity } from './offer.entity.js';
 import { OfferService } from './types/offer.service.interface.js';

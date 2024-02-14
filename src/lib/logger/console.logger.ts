@@ -1,5 +1,5 @@
-import { getErrorMessage } from '#utils/common.js';
 
+import { getErrorMessage } from '../../utils/common.js';
 import { Logger } from './types/logger.interface.js';
 
 export class ConsoleLogger implements Logger {

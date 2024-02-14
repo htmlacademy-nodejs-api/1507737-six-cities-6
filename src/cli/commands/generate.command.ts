@@ -1,13 +1,14 @@
 import got from 'got';
+import { injectable } from 'inversify';
 import invariant from 'tiny-invariant';
 
-import { TSVFileWriter } from '#lib/file-writer/index.js';
-import { TSVOfferGenerator } from '#lib/offer-generator/index.js';
-import { MockServerData } from '#types/mock-server-data.types.js';
-import { getErrorMessage } from '#utils/common.js';
-
+import { TSVFileWriter } from '../../lib/file-writer/tsv-file-writer.js';
+import { TSVOfferGenerator } from '../../lib/offer-generator/tsv-offer-generator.js';
+import { MockServerData } from '../../types/mock-server-data.types.js';
+import { getErrorMessage } from '../../utils/common.js';
 import { Command } from './command.interface.js';
 
+@injectable()
 export class GenerateCommand implements Command {
   private initialData?: MockServerData;
 

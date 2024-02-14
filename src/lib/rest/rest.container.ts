@@ -1,11 +1,12 @@
 import { Container } from 'inversify';
 
-import { RestAppConfig, RestConfig } from '#modules/config/index.js';
-import { DBClient } from '#modules/db/db.interface.js';
-import { MongoDB } from '#modules/db/mongo.module.js';
-import { Logger, PinoLogger } from '#modules/logger/index.js';
-import { Component } from '#types/component.enum.js';
-
+import { Component } from '../../types/component.enum.js';
+import { RestConfig } from '../config/rest-config.config.js';
+import { RestAppConfig } from '../config/types/rest-config.types.js';
+import { DBClient } from '../db/db.interface.js';
+import { MongoDB } from '../db/mongo.module.js';
+import { PinoLogger } from '../logger/pino.logger.js';
+import { Logger } from '../logger/types/logger.interface.js';
 import { RestApp } from './rest.module.js';
 
 export function createRestAppContainer() {

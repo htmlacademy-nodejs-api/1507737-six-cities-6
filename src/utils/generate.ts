@@ -19,3 +19,7 @@ export function getRandomBoolean() {
 export function getRandomAvatarUrl() {
   return 'https://i.pravatar.cc/300';
 }
+
+export function generatePassword() {
+  return getRandomItem(['123', 'testtest']);
+}

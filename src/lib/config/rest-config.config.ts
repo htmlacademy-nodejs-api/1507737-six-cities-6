@@ -1,11 +1,10 @@
 import { config } from 'dotenv';
 import { inject, injectable } from 'inversify';
 
-import { Logger } from '#modules/logger/index.js';
-import { Component } from '#types/component.enum.js';
-
+import { Component } from '../../types/component.enum.js';
+import type { Logger } from '../logger/types/logger.interface.js';
 import { configRestSchema } from './rest-config.schema.js';
-import { RestAppConfig, RestSchema } from './types/rest-config.types.js';
+import type { RestAppConfig, RestSchema } from './types/rest-config.types.js';
 
 @injectable()
 export class RestConfig implements RestAppConfig {

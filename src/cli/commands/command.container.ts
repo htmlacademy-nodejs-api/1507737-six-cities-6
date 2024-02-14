@@ -1,7 +1,6 @@
 import { Container } from 'inversify';
 
-import { Component } from '#types/component.enum.js';
-
+import { Component } from '../../types/component.enum.js';
 import { Command } from './command.interface.js';
 import { GenerateCommand } from './generate.command.js';
 import { HelpCommand } from './help.command.js';

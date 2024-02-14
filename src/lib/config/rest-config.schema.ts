@@ -1,5 +1,4 @@
-import convict from '#lib/convict.js';
-
+import {convict} from '../convict.js';
 import { RestSchema } from './types/rest-config.types.js';
 
 export const configRestSchema = convict<RestSchema>({

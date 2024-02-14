@@ -1,6 +1,9 @@
+import { UserAccountType } from '../types/user.enum.js';
+
 export class CreateUserDto {
-  firstname!: string;
-  lastname!: string;
+  name!: string;
   email!: string;
+  avatar?: string;
   password!: string;
+  accountType!: UserAccountType;
 }
