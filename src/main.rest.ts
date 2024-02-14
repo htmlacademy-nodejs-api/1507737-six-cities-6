@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 
-import { defineContainers } from '#define-containers.js';
+import { getRootContainer } from './root-container.js';
 
 async function bootstrap() {
-  const {app} = defineContainers();
+  const app = getRootContainer();
   app.init();
 }
 

@@ -15,3 +15,11 @@ export function getRandomItem<T>(items: T[]):T {
 export function getRandomBoolean() {
   return Boolean(generateRandomValue(0, 1));
 }
+
+export function getRandomAvatarUrl() {
+  return 'https://i.pravatar.cc/300';
+}
+
+export function generatePassword() {
+  return getRandomItem(['123', 'testtest']);
+}

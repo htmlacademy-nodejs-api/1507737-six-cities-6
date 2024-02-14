@@ -25,10 +25,7 @@
     ],
     "lib": [
       "ESNext"
-    ],
-    "paths": {
-      "#*": ["./src/*"],
-    }
+    ]
   },
   "include": [
     "src/**/*.ts"
@@ -38,7 +35,6 @@
     "**/*.test.ts"
   ],
   "ts-node": {
-    "transpileOnly": true,
     "esm": true
   }
 }

@@ -1,18 +1,11 @@
 import { CLIApp } from './cli-app.js';
-import { GenerateCommand } from './commands/generate.command.js';
-import { HelpCommand } from './commands/help.command.js';
-import { ImportCommand } from './commands/import.command.js';
-import { VersionCommand } from './commands/version.command.js';
+import { getCommandsWithContainer } from './get-commands-with-container.js';
 
 export function run() {
   const cli = new CLIApp();
+  const commands = getCommandsWithContainer();
 
-  cli.registerCommands([
-    new HelpCommand(),
-    new VersionCommand(),
-    new GenerateCommand(),
-    new ImportCommand(),
-  ]);
+  cli.registerCommands(commands);
   cli.processCommand(process.argv);
 }
 

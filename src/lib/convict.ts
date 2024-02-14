@@ -3,4 +3,4 @@ import validator from 'convict-format-with-validator';
 
 convict.addFormats(validator);
 
-export default convict;
+export {convict};
