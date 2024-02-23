@@ -52,7 +52,7 @@ export class ImportCommand implements Command {
     await this.offerService.create({
       authorId: user.id,
       city: offer.city,
-      coordinate: offer.coordinate,
+      location: offer.coordinate,
       description: offer.description,
       guestsCount: offer.guestsCount,
       housingPhotos: offer.housingPhotos,

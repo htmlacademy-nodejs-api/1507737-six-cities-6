@@ -1,10 +1,10 @@
 import { OfferImporovements, OfferType } from '../modules/offer/types/offer.enum.js';
-import { OfferCoordinate } from '../modules/offer/types/offer.types.js';
+import { OfferLocation } from '../modules/offer/types/offer.types.js';
 import { UserAccountType } from '../modules/user/types/user.enum.js';
 import { MockOffer} from '../types/mock.types.js';
 import { toBoolean } from './common.js';
 
-function parseCoordinateString(coordinateRaw: string): OfferCoordinate {
+function parseCoordinateString(coordinateRaw: string): OfferLocation {
   const [latitude, longitude] = coordinateRaw.split(',');
 
   return {

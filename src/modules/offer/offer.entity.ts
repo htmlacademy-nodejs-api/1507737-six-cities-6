@@ -3,7 +3,7 @@ import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { CommentEntity } from '../comment/comment.entity.js';
 import { UserEntity } from '../user/user.entity.js';
 import { OfferCity, OfferImporovements, OfferType } from './types/offer.enum.js';
-import type { OfferCoordinate } from './types/offer.types.js';
+import type { OfferLocation } from './types/offer.types.js';
 
 @modelOptions({
   schemaOptions: {
@@ -62,7 +62,7 @@ export class OfferEntity {
   public commentCount!: number;
 
   @prop({ required: true })
-  public coordinate!: OfferCoordinate;
+  public location!: OfferLocation;
 
   @prop({
     ref: () => UserEntity,
