@@ -1,4 +1,4 @@
-export type OfferCoordinate = {
+export type OfferLocation = {
   latitude: number;
   longitude: number;
 }

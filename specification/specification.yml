@@ -1,0 +1,512 @@
+openapi: 3.0.3
+info:
+  title: Six cities REST API
+  version: '1.0'
+servers:
+  - url: https://api.example.io
+paths:
+  /offers:
+    post:
+      summary: Создание нового предложения
+      tags:
+        - offers
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOffer'
+      responses:
+        '200':
+          description: Созданное предложение
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    get:
+      summary: Список предложений по аренде
+      tags:
+       - offers
+      parameters:
+        - name: limit
+          description: Количество предложений
+          schema:
+            type: string
+          in: query
+      responses:
+        '200':
+          description: Список предложений
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Offer'
+  /offers/favorites:
+    get:
+      summary: Список избранных предложений
+      tags:
+        - offers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список предложений
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Offer'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    post:
+      summary: Добавление и удаление предложения в/из избранного
+      tags:
+        - offers
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: offerId
+          required: true
+          description: ID предложения
+          schema:
+            type: string
+        - in: query
+          name: action
+          required: true
+          schema:
+            type: string
+            enum: [ADD, REMOVE]
+          description: >
+            Действие:
+             * `ADD` - Добавить в избранное
+             * `REMOVE` - Удалить из избранного
+      responses:
+        '204':
+          description: Предложение добавлено или удалено в/из избранного
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+  /offers/{offerId}:
+    parameters:
+      - in: path
+        name: offerId
+        schema:
+          type: string
+          example: "635981f6e40f61599e839ddb"
+        required: true
+        description: ID предложения
+    get:
+      summary: Детальная информация по предложению
+      tags:
+       - offers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Детали предложения
+          content:
+            'application/json' :
+              schema:
+                $ref: '#/components/schemas/OfferDetails'
+    patch:
+      summary: Редактирование предложения
+      tags:
+       - offers
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - $ref: '#/components/schemas/CreateOffer'
+      responses:
+        '200':
+          description: Детали предложения
+          content:
+            'application/json' :
+              schema:
+                $ref: '#/components/schemas/OfferDetails'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Удаление предложения по аренде
+      tags:
+      - offers
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          $ref: '#/components/responses/SuccessDelete'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /offers/{offerId}/comments:
+    post:
+      summary: Добавление комментария к предложению
+      tags:
+        - offers
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateComment'
+      responses:
+        '200':
+          description: Список комментариев
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    get:
+      summary: Список комментариев для предложения
+      tags:
+        - offers
+      responses:
+        '200':
+          description: Список комментариев
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /offers/{cityId}/premium:
+    get:
+      summary: Премиальные предложения для города
+      tags:
+        - offers
+      responses:
+        '200':
+          description: Список предложений (не больше 3)
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Offer'
+  /users/register:
+    post:
+      summary: Создание нового пользователя
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        '200':
+          description: Созданный пользователь
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/login:
+    post:
+      summary: Вход в закрытую часть приложения
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+      responses:
+        '200':
+          description: Токен
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/LoginToken'
+  /users/me:
+    get:
+      summary: Проверка состояния пользователя
+      tags:
+        - users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Данные пользователя
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    NotFound:
+      description: Указанный ресурс не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseError'
+    UnauthorizedError:
+      description: Токен отсутствует или недействителен.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseError'
+    SuccessDelete:
+      description: Ресурс успешно удален.
+    UnexpectedError:
+      description: Неожиданная ошибка
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseError'
+
+
+  schemas:
+    CreateOffer:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Modern Apartment
+        city:
+          type: string
+          example: Cologne
+        preview:
+          type: string
+          example: photo15.jpg
+        isPremium:
+          type: boolean
+          example: true
+        type:
+          type: string
+          example: house
+        rentalPrice:
+          type: number
+          example: 1999
+        housingPhotos:
+          type: array
+          items:
+            type: string
+            example: photo10, photo11, photo12
+        roomsCount:
+          type: number
+          example: 1
+        guestsCount:
+          type: number
+          example: 3
+        imrovements:
+          type: array
+          items:
+            type: string
+            example: Netflix, Netflix
+        location:
+          $ref: '#/components/schemas/OfferLocation'
+        authorId:
+          type: string
+          example: "635981f6e40f61599e839ddb"
+
+    Offer:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Modern Apartment
+        city:
+          type: string
+          example: Cologne
+        preview:
+          type: string
+          example: photo15.jpg
+        isPremium:
+          type: boolean
+          example: true
+        isFavorite:
+          type: boolean
+          example: true
+        type:
+          type: string
+          example: house
+        rentalPrice:
+          type: number
+          example: 1999
+        rating:
+          type: number
+          example: 5
+        commentCount:
+          type: number
+          example: 0
+        createdAt:
+          type: string
+          example: "2011-10-05T14:48:00.000Z"
+
+    OfferDetails:
+      allOf:
+      - $ref: '#/components/schemas/Offer'
+      - type: object
+        properties:
+          description:
+            type: string
+            example: Urban town living
+          roomsCount:
+            type: number
+            example: 1
+          guestsCount:
+            type: number
+            example: 3
+          imrovements:
+            type: array
+            items:
+              type: string
+              example: Netflix
+          housingPhotos:
+            type: array
+            items:
+              type: string
+              example: photo10, photo11, photo12
+          location:
+            $ref: '#/components/schemas/OfferLocation'
+          author:
+            $ref: '#/components/schemas/User'
+
+    OfferLocation:
+      type: object
+      properties:
+        latitude:
+          type: number
+          example: 52.370216
+        longitude:
+          type: number
+          example: 4.895168
+
+    LoginUser:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+          example: somelogin
+        password:
+          type: string
+          example: qwerty123
+
+    LoginToken:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+    CreateUser:
+      type: object
+      required:
+        - "name"
+        - "email"
+        - "password"
+      properties:
+        name:
+          type: string
+          example: Alice Smith
+        email:
+          type: string
+          example: example@mail.com
+        password:
+          type: string
+          example: qwerty123
+        avatar:
+          type: string
+          example: photo5.jpg
+
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Alice Smith
+        email:
+          type: string
+          example: bob123@example.com
+        avatar:
+          type: string
+          example: photo5.jpg
+        accountType:
+          $ref: '#/components/schemas/AccountType'
+
+    AccountType:
+      type: string
+      enum:
+        - обычный
+        - pro
+
+    CreateComment:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: '635981f6e40f61599e839ddb'
+        text:
+          type: string
+          example: Minima officiis minus sed excepturi iure consequatur libero ex. Consequuntur nesciunt dignissimos laborum sed soluta qui. Laborum voluptas mollitia incidunt. Debitis possimus officiis.
+        rating:
+          type: number
+          description: Рейтинг. Число от 1 до 5
+          example: 1
+      required:
+        - "userId"
+        - "text"
+        - "rating"
+
+    Comment:
+      type: object
+      properties:
+        text:
+          type: string
+          example: Minima officiis minus sed excepturi iure consequatur libero ex. Consequuntur nesciunt dignissimos laborum sed soluta qui. Laborum voluptas mollitia incidunt. Debitis possimus officiis.
+        createdAt:
+          type: string
+          example: "2011-10-05T14:48:00.000Z"
+        rating:
+          type: number
+          description: Рейтинг. Число от 1 до 5
+          example: 1
+        author:
+          $ref: '#/components/schemas/User'
+    BaseError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+tags:
+  - name: offers
+    description: Действия с предложениями по аренде
+  - name: users
+    description: Действия с пользователем

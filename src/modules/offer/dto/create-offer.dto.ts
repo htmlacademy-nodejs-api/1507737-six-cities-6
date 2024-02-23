@@ -1,5 +1,5 @@
 import { OfferImporovements, OfferType } from '../types/offer.enum.js';
-import { OfferCoordinate } from '../types/offer.types.js';
+import { OfferLocation } from '../types/offer.types.js';
 
 export class CreateOfferDto {
   public name!: string;
@@ -13,6 +13,6 @@ export class CreateOfferDto {
   public guestsCount!: number;
   public rentalPrice!: number;
   public imrovements!: OfferImporovements[];
-  public coordinate!: OfferCoordinate;
+  public location!: OfferLocation;
   public authorId!: string;
 }

@@ -1,5 +1,5 @@
 import { OfferImporovements, OfferType } from '../modules/offer/types/offer.enum.js';
-import { OfferCoordinate } from '../modules/offer/types/offer.types.js';
+import { OfferLocation } from '../modules/offer/types/offer.types.js';
 import { UserAccountType } from '../modules/user/types/user.enum.js';
 
 export type MockOffer = {
@@ -24,5 +24,5 @@ export type MockOffer = {
     avatar: string;
   };
   commentsCount: number;
-  coordinate: OfferCoordinate;
+  coordinate: OfferLocation;
 }
