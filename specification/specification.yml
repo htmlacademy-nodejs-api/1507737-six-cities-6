@@ -259,7 +259,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-
   responses:
     NotFound:
       description: Указанный ресурс не найден
@@ -282,17 +281,51 @@ components:
           schema:
             $ref: '#/components/schemas/BaseError'
 
-
   schemas:
+    City:
+      type: string
+      enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
+      example: Cologne
+    OfferType:
+      type: string
+      enum: [apartment, house, room, hotel]
+      example: house
+    OfferImprovement:
+      type: array
+      items:
+        type: string
+        example: [Breakfast, Air conditioning, Laptop friendly workspace, Baby seat, Washer, Towels, Fridge]
+        description: One or more options from the list
+    OfferName:
+      type: string
+      minLength: 10
+      maxLength: 100
+    OfferDescription:
+      type: string
+      minLength: 20
+      maxLength: 1024
     CreateOffer:
       type: object
+      required:
+        - "name"
+        - "city"
+        - "preview"
+        - "isPremium"
+        - "type"
+        - "rentalPrice"
+        - "housingPhotos"
+        - "roomsCount"
+        - "guestsCount"
+        - "imrovements"
+        - "location"
+        - "authorId"
       properties:
         name:
-          type: string
-          example: Modern Apartment
+          $ref: '#/components/schemas/OfferName'
+        description:
+          $ref: '#/components/schemas/OfferDescription'
         city:
-          type: string
-          example: Cologne
+          $ref: '#/components/schemas/City'
         preview:
           type: string
           example: photo15.jpg
@@ -300,8 +333,7 @@ components:
           type: boolean
           example: true
         type:
-          type: string
-          example: house
+          $ref: '#/components/schemas/OfferType'
         rentalPrice:
           type: number
           example: 1999
@@ -317,16 +349,12 @@ components:
           type: number
           example: 3
         imrovements:
-          type: array
-          items:
-            type: string
-            example: Netflix, Netflix
+          $ref: '#/components/schemas/OfferImprovement'
         location:
           $ref: '#/components/schemas/OfferLocation'
         authorId:
           type: string
           example: "635981f6e40f61599e839ddb"
-
     Offer:
       type: object
       properties:
@@ -360,7 +388,6 @@ components:
         createdAt:
           type: string
           example: "2011-10-05T14:48:00.000Z"
-
     OfferDetails:
       allOf:
       - $ref: '#/components/schemas/Offer'
@@ -389,7 +416,6 @@ components:
             $ref: '#/components/schemas/OfferLocation'
           author:
             $ref: '#/components/schemas/User'
-
     OfferLocation:
       type: object
       properties:
@@ -399,7 +425,6 @@ components:
         longitude:
           type: number
           example: 4.895168
-
     LoginUser:
       type: object
       required:
@@ -412,14 +437,12 @@ components:
         password:
           type: string
           example: qwerty123
-
     LoginToken:
       type: object
       properties:
         token:
           type: string
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-
     CreateUser:
       type: object
       required:
@@ -439,7 +462,6 @@ components:
         avatar:
           type: string
           example: photo5.jpg
-
     User:
       type: object
       properties:
@@ -454,13 +476,11 @@ components:
           example: photo5.jpg
         accountType:
           $ref: '#/components/schemas/AccountType'
-
     AccountType:
       type: string
       enum:
         - обычный
         - pro
-
     CreateComment:
       type: object
       properties:
@@ -478,7 +498,6 @@ components:
         - "userId"
         - "text"
         - "rating"
-
     Comment:
       type: object
       properties:

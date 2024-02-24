@@ -61,14 +61,17 @@ export class OfferEntity {
   @prop({ default: 0 })
   public commentCount!: number;
 
-  @prop({ required: true })
+  @prop({
+    required: true,
+    type: () => Object,
+  })
   public location!: OfferLocation;
 
   @prop({
     ref: () => UserEntity,
     _id: false
   })
-  public user?: Ref<UserEntity>;
+  public userId?: Ref<UserEntity>;
 
   @prop({
     ref: () => CommentEntity,

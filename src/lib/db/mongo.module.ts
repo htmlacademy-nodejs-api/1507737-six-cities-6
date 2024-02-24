@@ -16,7 +16,7 @@ export class MongoDB implements DBClient {
   constructor(@inject(Component.Logger) private readonly logger: Logger) {}
 
   private get isConnected() {
-    return this.mongoose.connection.readyState === Mongoose.STATES.connected;
+    return this.mongoose?.connection.readyState === Mongoose.STATES.connected;
   }
 
   async connect(uri: string): Promise<void> {
