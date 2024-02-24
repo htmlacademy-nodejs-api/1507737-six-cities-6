@@ -5,6 +5,7 @@ import invariant from 'tiny-invariant';
 import { RestAppConfig } from '../../lib/config/types/rest-config.types.js';
 import type { MongoDB } from '../../lib/db/mongo.module.js';
 import { TSVFileReader } from '../../lib/file-reader/tsv-file-reader.js';
+import { OfferCity } from '../../modules/offer/types/offer.enum.js';
 import { OfferService } from '../../modules/offer/types/offer.service.interface.js';
 import { UserService } from '../../modules/user/types/user.service.interface.js';
 import { Component } from '../../types/component.enum.js';
@@ -50,8 +51,8 @@ export class ImportCommand implements Command {
     }, this.salt);
 
     await this.offerService.create({
-      authorId: user.id,
-      city: offer.city,
+      userId: user.id,
+      city: offer.city as OfferCity,
       location: offer.coordinate,
       description: offer.description,
       guestsCount: offer.guestsCount,

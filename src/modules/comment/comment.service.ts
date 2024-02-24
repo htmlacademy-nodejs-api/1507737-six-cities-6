@@ -21,6 +21,6 @@ export class CommentServiceImpl implements CommentService {
   }
 
   public async findByOfferId(offerId: string) {
-    return this.commentModel.find({ offerId }).exec();
+    return this.commentModel.find({ offer: offerId }).exec();
   }
 }

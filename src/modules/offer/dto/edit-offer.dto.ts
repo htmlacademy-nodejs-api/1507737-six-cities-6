@@ -1,7 +1,7 @@
 import { OfferCity, OfferImporovements, OfferType } from '../types/offer.enum.js';
 import { OfferLocation } from '../types/offer.types.js';
 
-export class CreateOfferDto {
+export class EditOfferDto {
   public name!: string;
   public description!: string;
   public city!: OfferCity;
